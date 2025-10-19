@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     // Hardcoded latest table name for testing
     const query = `
       SELECT *
-      FROM \`final-1b6f0_analytics_496706219.YOUR_LATEST_TABLE\`
+      FROM \`final-1b6f0_analytics_496706219.events_20251018\`
       LIMIT 5
     `;
 
