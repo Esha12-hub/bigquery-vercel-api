@@ -7,19 +7,12 @@ export default async function handler(req, res) {
       credentials: JSON.parse(process.env.BIGQUERY_KEY),
     });
 
-    // Hardcoded latest table name for testing
-    const query = `
-      SELECT *
-      FROM \`final-1b6f0_analytics_496706219.events_20251018\`
-      LIMIT 5
-    `;
+    const [tables] = await bigquery.dataset('final-1b6f0_analytics_496706219').getTables();
+    console.log("Tables:", tables.map(t => t.id));
 
-    const [rows] = await bigquery.query(query);
-
-    console.log("Rows fetched:", rows.length);
-    res.status(200).json(rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: err.message });
+    res.status(200).json({ tables: tables.map(t => t.id) });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: error.message });
   }
 }
